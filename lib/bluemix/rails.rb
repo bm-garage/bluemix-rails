@@ -1,7 +1,2 @@
 require "bluemix/rails/version"
-
-module Bluemix
-  module Rails
-
-  end
-end
+require 'bluemix/rails/db_config_checker'
