@@ -9,5 +9,4 @@ class EnvChecker
     vcap.key?("elephantsql")
   end
 
-
 end
