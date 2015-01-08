@@ -14,6 +14,7 @@ class DbConfigChecker
   ]
 
   def initialize(file_location)
+    @file_location = file_location
     @yml_file = File.open(file_location).read.split(/\n/)
   end
 
@@ -38,5 +39,10 @@ class DbConfigChecker
 
   def add_new_production!
     @yml_file = delete_existing_production! + ELEPHANTSQL_CONFIG
+  end
+
+  def update_database_yml
+    add_new_production!
+    IO.binwrite(@file_location, @yml_file.join("\n"))
   end
 end

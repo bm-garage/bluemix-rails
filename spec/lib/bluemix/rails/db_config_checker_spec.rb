@@ -2,7 +2,11 @@ require 'spec_helper'
 
 
 describe DbConfigChecker do
-  let (:config) { DbConfigChecker.new("./temp/input/database.yml") }
+  let (:config) { DbConfigChecker.new("./config/database.yml") }
+
+  after do
+    IO.binwrite("./config/database.yml", File.read("./config/input/database.yml"))
+  end
 
   it 'grabs the contents of the database and loads it as an array' do
     expect(config.yml_file).to eq(
@@ -35,4 +39,10 @@ describe DbConfigChecker do
                                               "<% end %>"]
                                           )
   end
+
+  it 'updates the original config file with the new production settings' do
+    config.update_database_yml
+    expect(File.read("./config/database.yml").split(/\n/).count).to eq(File.read("./config/correct_files/database.yml").split(/\n/).count)
+  end
+
 end
